@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { v4 as uuidv4 } from "uuid";
 import Axios from "axios";
 import Recipe from "./components/Recipe";
 
@@ -38,11 +39,19 @@ export default function App() {
         />
         <input type="submit" value="Search" />
       </form>
-      {recipes.map((recipe)=>(
-        <Recipe name={recipe.recipe.label}
-        calories ={recipe.recipe.calories}
-        image={recipe.recipe.image}/>
-      ))}
+      {recipes !== [] ? (
+        recipes.map(recipe => (
+          <Recipe
+            key={uuidv4()}
+            name={recipe.recipe.label}
+            url={recipe.recipe.url}
+            image={recipe.recipe.image}
+            ingredient={recipe.recipe.ingredient}
+          />
+        ))
+      ) : (
+        <h1>"There is no recipe for that search!"</h1>
+      )}
     </div>
   );
 }
